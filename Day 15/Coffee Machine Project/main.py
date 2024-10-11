@@ -48,13 +48,28 @@ def insert_coins():
 def calculate_change():
     change = insert_coins() - MENU[user_input]["cost"]
     return round(change, 2)
+def latte_and_cappucino():
+    print(f"Here is ${calculate_change()} in change.")
+    print(f"Here is your {user_input} ☕️ Enjoy!")
+    resources["water"] -= MENU[user_input]["ingredients"]["water"]
+    resources["milk"] -= MENU[user_input]["ingredients"]["milk"]
+    resources["coffee"] -= MENU[user_input]["ingredients"]["coffee"]
+    resources["cost"] += MENU["latte"]["cost"]
+
+def espresso():
+    print(f"Here is ${calculate_change()} in change.")
+    print(f"Here is your {user_input} ☕️ Enjoy!")
+    resources["water"] -= MENU[user_input]["ingredients"]["water"]
+    resources["coffee"] -= MENU[user_input]["ingredients"]["coffee"]
+    resources["cost"] += MENU["latte"]["cost"]
 
 user_want = True
 while user_want == True:
     if user_input == "report":
         [print(f"{key.capitalize()}: {value}") for key, value in resources.items()]
-    if user_input == "latte":
-        print(f"Here is ${calculate_change()} in change.")
-        print(f"Here is your latte ☕️ Enjoy!")
-        resources["cost"] += MENU["latte"]["cost"]
+    if user_input == "latte" or user_input == "cappucino":
+        latte_and_cappucino()
+    elif user_input == "espresso":
+        espresso()
+
     user_input = input("What would you like? (espresso/latte/cappucino): ")
